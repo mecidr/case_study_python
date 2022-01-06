@@ -23,7 +23,7 @@ average_review_score = round(sum(review_scores) / len(review_scores), 1)
 def calculate_distance(first_pair: tuple, second_pair: tuple):
     """ Approximates distance between in two  coordinate pairs using haversine formula """
 
-    #I have used article mentioned below for calculating distance and converted js code shown there to python
+    # I have used article mentioned below for calculating distance and converted js code shown there to python
     # Source https://www.movable-type.co.uk/scripts/latlong.html
 
     R = 6371e3
@@ -34,7 +34,7 @@ def calculate_distance(first_pair: tuple, second_pair: tuple):
     a = (sin(delta_phi / 2)) ** 2 + cos(phi1) * cos(phi2) * (sin(delta_lambda / 2)) ** 2
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
-    #distance in meters
+    # distance in meters
     return round(R * c)
 
 
@@ -52,18 +52,18 @@ def get_rating(element):
         rating = element['reviewscore'] / distance
     else:
         rating = (average_review_score-0.5)/ distance
-    # final rating is reversed so that closer and hig review score  business will get higher rating point
+    # final rating is reversed so that closer and high review score  business will get higher rating point
     return 1 / rating
 
 
 def ranker(point_coord, dict_list):
     sorted_dict_list = sorted(dict_list, key=get_rating)
-    #slicing first 8 elements
+    # slicing first 8 elements
     return sorted_dict_list[:8]
 
 
 sorted_list = ranker(point_coord, dict_list)
 
-#uncomment to print out the result
+# uncomment to print out the result
 print(*sorted_list, sep="\n")
 
